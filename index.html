@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Poema do Noel</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #f5f5f5;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    #intro {
+      font-size: 1.8rem;
+      text-align: center;
+      max-width: 800px;
+      opacity: 0;
+      transition: opacity 1s ease;
+      white-space: nowrap;
+    }
+
+    #poem {
+      font-size: 1.2rem;
+      display: none;
+      white-space: pre-wrap;
+      max-width: 800px;
+    }
+
+    .author {
+      margin-top: 2rem;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="intro"></div>
+  <div id="poem"></div>
+
+  <script>
+    const intro = document.getElementById('intro');
+    const poemDiv = document.getElementById('poem');
+
+    const introTexts = [
+      "Poema de amor",
+      "...",
+      "Criado por Noelzin_",
+      "...",
+      "Instagram: @noelstudioss",
+      "Carregando poema"
+    ];
+
+    const poemText = `Você com esse seu jeito marrento,
+faz de conta que não sente,
+mas eu conheço o pensamento
+desse seu olhar indecente.
+
+
+
+Tem pose de real gangster,
+de quem não se deixa envolver,
+mas quando é comigo, Arthur,
+eu acho que começa a ceder.
+
+
+
+E se hoje eu falei pouco,
+foi só falta de ocasião,
+porque mesmo sem dizer muito,
+você sempre tá no meu coração. ♡
+❤❤❤.`;
+
+    const author = "\n\n— Bebel · 16/09/2026";
+    const fadeDuration = 1000; // tempo do fade in/out em ms
+    const visibleDuration = 1500; // tempo que a frase fica visível em ms
+    const speed = 90;
+    let i = 0;
+
+    function showIntroTexts(index = 0) {
+      if (index >= introTexts.length) {
+        intro.style.display = 'none';
+        poemDiv.style.display = 'block';
+        typePoem();
+        return;
+      }
+
+      intro.textContent = introTexts[index];
+      intro.style.opacity = 0;
+
+      // Fade in
+      setTimeout(() => {
+        intro.style.opacity = 1;
+
+        // Depois do tempo visível, faz fade out
+        setTimeout(() => {
+          intro.style.opacity = 0;
+
+          // Depois do fade out, passa para a próxima frase
+          setTimeout(() => {
+            showIntroTexts(index + 1);
+          }, fadeDuration);
+
+        }, visibleDuration);
+
+      }, 100);
+    }
+
+    function typePoem() {
+      if (i < poemText.length) {
+        poemDiv.innerHTML += poemText.charAt(i);
+        i++;
+        setTimeout(typePoem, speed);
+      } else {
+        setTimeout(() => {
+          const authorTag = document.createElement("div");
+          authorTag.className = "author";
+          authorTag.textContent = author;
+          poemDiv.appendChild(authorTag);
+          authorTag.style.opacity = 1;
+        }, 1000);
+      }
+    }
+
+    // Começa a intro
+    showIntroTexts();
+  </script>
+</body>
+
+</html>
